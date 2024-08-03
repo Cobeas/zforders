@@ -5,7 +5,7 @@ const { Client } = pgk;
 const wss = new WebSocketServer({ port: 8080 });
 
 const client = new Client({
-    connectionString: 'postgres://postgres:Bsgp2GlHLvfj3W%5FKHORRk2d0sl8boFB1LjISJrkHOL8@localhost:5432/zforders'
+    connectionString: 'postgresql://zfmedewerker:Bsgp2GlHLvfj3WFKHORRk2d0sl8boFB1LjISJrkHOL8@localhost:5432/zforders'
 });
 
 client.connect();
