@@ -4,6 +4,76 @@ const prisma = new PrismaClient();
 async function rawSql() {
     const queries = [
         `
+        CREATE TABLE producten (
+          product_id SERIAL PRIMARY KEY,
+          product_naam TEXT UNIQUE,
+          product_prijs FLOAT
+        );
+        `,
+        `
+        CREATE TABLE snacks (
+          snack_id SERIAL PRIMARY KEY,
+          snack_naam TEXT UNIQUE,
+          snack_prijs FLOAT
+        );
+        `,
+        `
+        CREATE TABLE bestellingen (
+          bestelling_id SERIAL PRIMARY KEY,
+          timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          tafel INT,
+          notities TEXT,
+          bar INT,
+          bezorgd BOOLEAN DEFAULT FALSE
+        );
+        `,
+        `
+        CREATE TABLE bestelling_product (
+          id SERIAL PRIMARY KEY,
+          bestelling_id INT,
+          product_id INT,
+          snack_id INT,
+          aantal INT,
+          CONSTRAINT fk_bestelling FOREIGN KEY(bestelling_id) REFERENCES bestellingen(bestelling_id),
+          CONSTRAINT fk_product FOREIGN KEY(product_id) REFERENCES producten(product_id),
+          CONSTRAINT fk_snack FOREIGN KEY(snack_id) REFERENCES snacks(snack_id),
+          UNIQUE (bestelling_id, product_id, snack_id)
+        );
+        `,
+        `
+        CREATE TABLE setup (
+          setup_id SERIAL PRIMARY KEY
+        );
+        `,
+        `
+        CREATE TABLE bars (
+          bar_id SERIAL PRIMARY KEY,
+          bar_naam TEXT UNIQUE
+        );
+        `,
+        `
+        CREATE TABLE tafels (
+          tafel_id SERIAL PRIMARY KEY
+        );
+        `,
+        `
+        CREATE TABLE bar_tafel_relatie (
+          relatie_id SERIAL PRIMARY KEY,
+          bar_id INT,
+          tafel_id INT,
+          CONSTRAINT fk_bar FOREIGN KEY(bar_id) REFERENCES bars(bar_id),
+          CONSTRAINT fk_tafel FOREIGN KEY(tafel_id) REFERENCES tafels(tafel_id)
+        );
+        `,
+        `
+        CREATE TABLE logboek (
+          logboek_id SERIAL PRIMARY KEY,
+          timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          log_level TEXT,
+          message TEXT
+        );
+        `,
+        `
         CREATE OR REPLACE FUNCTION get_open_orders()
         RETURNS TABLE (
             bestelling_id INT,
