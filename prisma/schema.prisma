@@ -1,0 +1,83 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model producten {
+  product_id           Int                  @id @default(autoincrement())
+  product_naam         String               @unique
+  product_prijs        Float
+  bestelling_producten bestelling_product[]
+}
+
+model snacks {
+  snack_id             Int                  @id @default(autoincrement())
+  snack_naam           String               @unique
+  snack_prijs          Float
+  bestelling_producten bestelling_product[]
+}
+
+model bestellingen {
+  bestelling_id        Int                  @id @default(autoincrement())
+  timestamp            DateTime             @default(now())
+  tafel                Int
+  notities             String?
+  bar                  Int?
+  bezorgd              Boolean              @default(false)
+  bestelling_producten bestelling_product[]
+}
+
+model bestelling_product {
+  id            Int  @id @default(autoincrement())
+  bestelling_id Int
+  product_id    Int?
+  snack_id      Int?
+  aantal        Int
+
+  bestelling bestellingen @relation(fields: [bestelling_id], references: [bestelling_id])
+  product    producten?   @relation(fields: [product_id], references: [product_id])
+  snack      snacks?      @relation(fields: [snack_id], references: [snack_id])
+
+  @@unique([bestelling_id, product_id, snack_id])
+}
+
+model setup {
+  setup_id Int @id @default(autoincrement())
+}
+
+model bars {
+  bar_id             Int                 @id @default(autoincrement())
+  bar_naam           String              @unique
+  bar_tafel_relaties bar_tafel_relatie[]
+}
+
+model tafels {
+  tafel_id           Int                 @id @default(autoincrement())
+  bar_tafel_relaties bar_tafel_relatie[]
+}
+
+model bar_tafel_relatie {
+  relatie_id Int @id @default(autoincrement())
+  bar_id     Int
+  tafel_id   Int
+
+  bar   bars   @relation(fields: [bar_id], references: [bar_id])
+  tafel tafels @relation(fields: [tafel_id], references: [tafel_id])
+}
+
+model logboek {
+  logboek_id Int      @id @default(autoincrement())
+  timestamp  DateTime @default(now())
+  log_level  String
+  message    String
+}
+
+model trigger_tabel {
+  trigger_id Int      @id @default(autoincrement())
+  timestamp  DateTime @default(now())
+  used       Boolean  @default(false)
+}

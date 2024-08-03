@@ -1,0 +1,35 @@
+.count-check {
+    color: white;
+    background: var(--secondary-color);
+    width: 30px;
+    border: none;
+    height: 20px;
+    transform: translateY(2px);
+}
+
+.count-check:hover {
+    background: var(--primary-color);
+    cursor: pointer;
+}
+
+.count-check:active {
+    background: var(--primary-color);
+}
+
+input[type="number"] {
+    width: 75%;
+}
+
+@media screen and (max-width: 768px) {
+    .toprow {
+        flex-direction: column !important;
+    }
+
+    .smallfull {
+        width: 100% !important;
+    }
+
+    .smallbigger {
+        width: 50% !important;
+    }
+}
