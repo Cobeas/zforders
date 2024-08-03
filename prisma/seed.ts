@@ -126,6 +126,13 @@ async function rawSql() {
         $$ LANGUAGE plpgsql;
         `,
         `
+        CREATE TABLE trigger_tabel (
+          trigger_id SERIAL PRIMARY KEY,
+          timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          used BOOLEAN DEFAULT FALSE
+        );
+        `,
+        `
         CREATE OR REPLACE FUNCTION reset_database()
         RETURNS void AS $$
         BEGIN

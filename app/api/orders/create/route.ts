@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authMiddleware } from '@/app/lib/middleware';
 import { limiter } from '@/app/lib/middleware';
 import { prisma } from '@/app/lib/prisma';
-import { parse } from 'path';
 
 export async function POST(request: NextRequest) {
     const authResponse = authMiddleware(request);
