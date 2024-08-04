@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "concurrently \"next dev\" \"node ./server/server.mjs\"",
     "build": "next build",
-    "postinstall": "prisma generate",
+    "postinstall": "npx prisma generate",
     "start": "concurrently \"next start\" \"node ./server/server.mjs\"",
     "lint": "next lint"
   },
