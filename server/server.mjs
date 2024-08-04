@@ -5,7 +5,8 @@ const { Client } = pgk;
 const wss = new WebSocketServer({ port: 8080 });
 
 const client = new Client({
-    connectionString: 'postgresql://zfmedewerker:Bsgp2GlHLvfj3WFKHORRk2d0sl8boFB1LjISJrkHOL8@localhost:5432/zforders'
+    //development connectionString: 'postgresql://zfmedewerker:Bsgp2GlHLvfj3WFKHORRk2d0sl8boFB1LjISJrkHOL8@localhost:5432/zforders'
+    connectionString: 'postgres://postgres:Bsgp2GlHLvfj3WFKHORRk2d0sl8boFB1LjISJrkHOL8@oo4wcs8:5432/postgres'
 });
 
 client.connect();
@@ -17,7 +18,7 @@ client.on('notification', async (_msg) => {
         // Fetch the open orders
         const res = await client.query('SELECT * FROM get_open_orders()');
 
-        console.log('Open orders:', res.rows); // Log only the rows for clarity
+        //console.log('Open orders:', res.rows); // Log only the rows for clarity
         
         // Send the open orders to all clients
         wss.clients.forEach((client) => {
