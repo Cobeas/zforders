@@ -7,8 +7,10 @@
   },
   "scripts": {
     "dev": "concurrently \"next dev\" \"node ./server/server.mjs\"",
-    "build": "next build",
-    "postinstall": "npx prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db generate": "prisma generate",
+    "db:seed": "prisma db seed --preview-feature",
+    "build": "npm run db:migrate && npm run db:generate && next build",
     "start": "concurrently \"next start\" \"node ./server/server.mjs\"",
     "lint": "next lint"
   },

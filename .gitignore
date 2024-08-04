@@ -40,4 +40,4 @@ next-env.d.ts
 /sql queries/*
 
 # prisma migrations
-/prisma/migrations/*
+# /prisma/migrations/*
